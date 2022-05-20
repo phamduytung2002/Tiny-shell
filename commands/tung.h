@@ -100,13 +100,13 @@ int stop(string input) {
 }
 string stopDoc = "Stop a background process (draft).";
 
-int listprocess(string input) {
-    for (int i = 0; i < num_process; ++i) {
-        cout << pi[i].dwProcessId << " " << pi[i].dwThreadId << endl;
-    }
-    return 0;
-}
-string listprocessDoc = "All running process information.";
+// int listprocess(string input) {
+//     for (int i = 0; i < num_process; ++i) {
+//         cout << pi[i].dwProcessId << " " << pi[i].dwThreadId << endl;
+//     }
+//     return 0;
+// }
+// string listprocessDoc = "All running process information.";
 
 int resume(string input) {
     string processIdStr = takeFirstArgAndRemove(input);

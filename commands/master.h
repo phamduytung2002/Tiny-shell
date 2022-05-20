@@ -2,6 +2,7 @@
 #include "bien.h"
 #include "tung.h"
 #include "dat.h"
+#include "quoc.h"
 using namespace std;
 /*
     >> How to add a command:
@@ -23,7 +24,6 @@ void buildCommand() {
     funcmap["time"] = funcAndInstruction(timee, timeDoc);
     funcmap["date"] = funcAndInstruction(date, dateDoc);
     funcmap["stop"] = funcAndInstruction(stop, stopDoc);
-    funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
     funcmap["resume"] = funcAndInstruction(resume, resumeDoc);
     funcmap["addpath"] = funcAndInstruction(addpath, addpathDoc);
     funcmap["path"] = funcAndInstruction(path, pathDoc);
@@ -33,5 +33,6 @@ void buildCommand() {
     funcmap["foregroundMode"] = funcAndInstruction(foregroundMode, foregroundModeDoc);
     funcmap["backgroundMode"] = funcAndInstruction(backgroundMode, backgroundModeDoc);
     funcmap["runbat"] = funcAndInstruction(runBat, runBatDoc);
-    //funcmap["exit"] = funcAndInstruction(exit, exitDoc);
+    funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
+    funcmap["dir"] = funcAndInstruction(dir, dirDoc);
 }

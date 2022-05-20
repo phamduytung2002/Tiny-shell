@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "bien.h"
 #include "tung.h"
+#include "dat.h"
 using namespace std;
 /*
     >> How to add a command:
@@ -31,5 +32,6 @@ void buildCommand() {
     funcmap["kill"] = funcAndInstruction(kill, killDoc);
     funcmap["foregroundMode"] = funcAndInstruction(foregroundMode, foregroundModeDoc);
     funcmap["backgroundMode"] = funcAndInstruction(backgroundMode, backgroundModeDoc);
+    funcmap["runbat"] = funcAndInstruction(runBat, runBatDoc);
     //funcmap["exit"] = funcAndInstruction(exit, exitDoc);
 }

@@ -63,21 +63,6 @@ int datetime(string input) {
 }
 string datetimeDoc = "Display current date and time.";
 
-int runExe(string input) {
-    if (num_process == maxprocess) return 2;
-    string file = takeFirstArgAndRemove(input);
-    input = takeFirstArgAndRemove(input);
-    ZeroMemory(&si[num_process], sizeof(si[num_process]));
-    si[num_process].cb = sizeof(si[num_process]);
-    if (!CreateProcess(file.c_str(), NULL, NULL, NULL, FALSE,
-                       CREATE_NEW_CONSOLE, NULL, NULL, &si[num_process], &pi[num_process]))
-        return 2;
-    else {
-        ++num_process;
-        return 0;
-    }
-}
-string runExeDoc = "Run a .exe file, can omit 'runexe' (draft).";
 
 int stop(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
@@ -121,7 +106,7 @@ int resume(string input) {
     return 0;
 }
 string resumeDoc = "Resume a stopped background process.";
-
+/*
 int addpath(string input) {
     string a = takeFirstArgAndRemove(input);
     string b = takeFirstArgAndRemove(input);
@@ -129,7 +114,7 @@ int addpath(string input) {
     return 0;
 }
 string addpathDoc = "Add/change an environment variable";
-
+*/
 int path(string input) {
     cout << getenv(takeFirstArgAndRemove(input).c_str()) << "\n";
     return 0;
@@ -163,3 +148,74 @@ int delpath(string input) {
     return 0;
 }
 string delpathDoc = "Delete an environment variable";
+
+
+int runExe(string input) {
+    if (num_process == maxprocess) return 2;
+    string file = takeFirstArgAndRemove(input);
+    string inputs = takeFirstArgAndRemove(input);
+    
+    
+    ZeroMemory(&si[num_process], sizeof(si[num_process]));
+    si[num_process].cb = sizeof(si[num_process]);
+    if (!CreateProcess(file.c_str(), NULL, NULL, NULL, FALSE,
+                       CREATE_NEW_CONSOLE, NULL, NULL, &si[num_process], &pi[num_process]))
+        return 2;
+    else {
+        ++num_process;
+        
+        if ( inputs == "foreground"){
+            for (int i = 0; i < num_process-1 ; i++) {
+                    DWORD id = pi[i].dwProcessId;
+                    string ids = to_string(id);
+                    stop(ids);
+                }
+            WaitForSingleObject(pi[num_process-1].hProcess,INFINITE);
+            for (int i = 0; i < maxprocess; i++) {
+                DWORD id = pi[i].dwProcessId;
+                string idss = to_string(id);
+                resume(idss);
+                }
+            }
+
+
+
+
+        //     DWORD a = isProcessRunning(pi[num_process-1].hProcess);
+        //     if (a == STILL_ACTIVE){
+        //         for (int i = 0; i < num_process-1 ; i++) {
+        //             DWORD id = pi[i].dwProcessId;
+        //             string ids = to_string(id);
+        //             stop(ids);
+        //         }
+        //         /*
+        //         DWORD id_system =  GetCurrentProcessId();
+        //         string ids = to_string(id_system);
+        //         stop(ids);
+        //         */
+        //     }
+            
+        //     else{
+        //         //WaitForSingleObject(pi[num_process-1], INT_MAX);
+        //         for (int i = 0; i < maxprocess; i++) {
+        //             DWORD id = pi[i].dwProcessId;
+        //             string idss = to_string(id);
+        //             resume(idss);
+        //         }
+
+        //         //DWORD id_system =  GetCurrentProcessId();
+        //         //string ids = to_string(id_system);
+        //         //resume(ids);
+        //     }
+            
+        // }           
+                    
+            /*
+            while(a == STILL_ACTIVE);
+             
+            */
+        return 0;
+    }
+}
+
+string runExeDoc = "Run a .exe file, can omit 'runexe' (draft).";

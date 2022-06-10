@@ -25,7 +25,7 @@ void buildCommand() {
     funcmap["stop"] = funcAndInstruction(stop, stopDoc);
     funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
     funcmap["resume"] = funcAndInstruction(resume, resumeDoc);
-    funcmap["addpath"] = funcAndInstruction(addpath, addpathDoc);
+    //funcmap["addpath"] = funcAndInstruction(addpath, addpathDoc);
     funcmap["path"] = funcAndInstruction(path, pathDoc);
     funcmap["listpath"] = funcAndInstruction(listpath, listpathDoc);
     funcmap["delpath"] = funcAndInstruction(delpath, delpathDoc);

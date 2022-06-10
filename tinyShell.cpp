@@ -39,7 +39,7 @@ int main() {
     string input;
     while (true) {
         input = "";
-        cout << filesystem::current_path().string() << ">";
+        //cout << filesystem::current_path().string() << ">";
         getline(cin, input);
 
         string Input = Mode(input);

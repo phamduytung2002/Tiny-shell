@@ -1,46 +1,26 @@
 #include <bits/stdc++.h>
 #include <dirent.h>
+#include <processthreadsapi.h>
+#include <psapi.h>
 #include <tlhelp32.h>
 #include <windows.h>
-#include <processthreadsapi.h>
 using namespace std;
 
 int listprocess(string input) {
-    set<string> processList;
-    processList.insert("ourShell.exe");
-    processList.insert("checkmodule.exe");
-    processList.insert("checkthread.exe");
-    processList.insert("checkprocess.exe");
-    processList.insert("killprocess.exe");
-    processList.insert("help.exe");
-    processList.insert("Calculator.exe");
-    processList.insert("clrscr.exe");
-    processList.insert("clock.exe");
-
-    HANDLE hSnapShot = INVALID_HANDLE_VALUE;
-    PROCESSENTRY32 ProcessInfo = {0};
-    ProcessInfo.dwSize = sizeof(PROCESSENTRY32);
-    int count = 0;
-    hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-    cout<<"listing...\n";
-    if (INVALID_HANDLE_VALUE == hSnapShot) {
-        cout << "CreatToolhelp32SnapShot Function Failed" << endl;
-        cout << "Error No - " << GetLastError() << endl;
+    printf("Process ID\tStatus\tFile name\n");
+    for (int i = 0; i < num_process; ++i) {
+        HANDLE hProcess = pi[i].hProcess;
+        string this_status;
+        if (processStatus[i] == 0)
+            this_status = "running";
+        else if (processStatus[i] == 300)
+            this_status = "suspend";
+        else if (processStatus[i] == 200)
+            continue;
+        CHAR name[1024];
+        DWORD a = GetModuleFileNameEx(hProcess, NULL, name, 1024);
+        cout << pi[i].dwProcessId << "\t" << this_status << "\t" << name << "\n";
     }
-    DWORD exitCode = 0;
-    while (Process32Next(hSnapShot, &ProcessInfo) != FALSE) {
-        if (processList.find(ProcessInfo.szExeFile) == processList.end()) continue;
-        cout << "---------------------------------------" << endl;
-        cout << "\t PROCESS NO - " << ++count << endl;
-        cout << "---------------------------------------" << endl;
-        cout << "NO. OF THREAD - " << ProcessInfo.cntThreads << endl;
-        cout << "SIZE - " << ProcessInfo.dwSize << endl;
-        cout << "BASE PRIORITY - " << ProcessInfo.pcPriClassBase << endl;
-        wcout << "EXECUTABLE FILE - " << ProcessInfo.szExeFile << endl;
-        cout << "PPID - " << ProcessInfo.th32ParentProcessID << endl;
-        cout << "PPID - " << ProcessInfo.th32ProcessID << endl;
-    }
-    CloseHandle(hSnapShot);
     return 0;
 }
 string listprocessDoc = "Display running process informations.";

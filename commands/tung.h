@@ -62,14 +62,6 @@ int datetime(string input) {
 }
 string datetimeDoc = "Display current date and time.";
 
-int listprocess(string input) {
-    for (int i = 0; i < num_process; ++i) {
-        cout << pi[i].dwProcessId << " " << pi[i].dwThreadId << endl;
-    }
-    return 0;
-}
-string listprocessDoc = "All running process information.";
-
 int resume(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
     DWORD processId = stringToDWORD(processIdStr);
@@ -77,6 +69,7 @@ int resume(string input) {
     for (int i = 0; i < maxprocess; ++i) {
         if (pi[i].dwProcessId == processId) {
             ResumeThread(pi[i].hThread);
+            processStatus[i] = 0; //running
             break;
         }
     }
@@ -125,4 +118,3 @@ int delpath(string input) {
     return 0;
 }
 string delpathDoc = "Delete an environment variable";
-

@@ -15,24 +15,22 @@ int kill(string c) {
     // chuyen tu string sang so
     if (arg1 == ".") {
         for (int i = 0; i < maxprocess; i++) {
-            DWORD id = pi[i].dwProcessId;
-            HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, id);
-            TerminateProcess(hProc, 0);
+            TerminateProcess(pi[i].hProcess, 0);
+            processStatus[i] = 200;  // killed
         }
         return 0;
     } else {
         DWORD processId = stringToDWORD(arg1);
-        HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, processId);
-        if (hProc == NULL)
-            return 2;
-        else {
-            BOOL a = TerminateProcess(hProc, 0);
-            CloseHandle(hProc);
-            // num_process_run --;
-            cout << "dang thuc hien tien trinh" << endl;
+        for (int i = 0; i < num_process; ++i) {
+            if (pi[i].dwProcessId == processId) {
+                if (processStatus[i] == 200) return 2; //process is terminated
+                TerminateProcess(pi[i].hProcess, 0);
+                processStatus[i] = 200;
+                return 0;
+            }
         }
+        return 2; // cant found process
     }
-    return 0;
 }
 string killDoc = "kill a process with its ID; kill . for kill all.";
 

@@ -7,28 +7,16 @@ int stop(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
     DWORD processId = stringToDWORD(processIdStr);
 
-    HANDLE hThreadSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-    THREADENTRY32 threadEntry;
-    threadEntry.dwSize = sizeof(THREADENTRY32);
-    Thread32First(hThreadSnapshot, &threadEntry);
-    do {
-        if (threadEntry.th32OwnerProcessID == processId) {
-            HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, threadEntry.th32ThreadID);
-            SuspendThread(hThread);
-            CloseHandle(hThread);
+    for (int i = 0; i < num_process; ++i) {
+        if (pi[i].dwProcessId == processId) {
+            SuspendThread(pi[i].hThread);
+            processStatus[i] = 300; //Suspend
+            break;
         }
-    } while (Thread32Next(hThreadSnapshot, &threadEntry));
-
-    CloseHandle(hThreadSnapshot);
+    }
     return 0;
 }
 string stopDoc = "Stop a background process.";
-
-void signalHandler(int signum) {
-    HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, pi[num_process - 1].dwProcessId);
-    TerminateProcess(hProc, 0);
-    CloseHandle(hProc);
-}
 
 int runBatExe(string input) {
     if (num_process == maxprocess) return 2;
@@ -44,7 +32,11 @@ int runBatExe(string input) {
         ++num_process;
 
         if (inputs == "foreground") {
-            signal(SIGINT, signalHandler);
+            signal(SIGINT, [](int signum) {
+                HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, pi[num_process - 1].dwProcessId);
+                TerminateProcess(hProc, 0);
+                CloseHandle(hProc);
+            });
 
             for (int i = 0; i < num_process - 1; i++) {
                 DWORD id = pi[i].dwProcessId;

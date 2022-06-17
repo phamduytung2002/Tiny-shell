@@ -22,7 +22,6 @@ int exitShell(string c) {
         HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, id);
         TerminateProcess(hProc, 0);
     }
-    // Need to kill all process
     return 1;
 }
 string exitShellDoc = "Exit shell.";
@@ -63,50 +62,13 @@ int datetime(string input) {
 }
 string datetimeDoc = "Display current date and time.";
 
-int runExe(string input) {
-    if (num_process == maxprocess) return 2;
-    string file = takeFirstArgAndRemove(input);
-    input = takeFirstArgAndRemove(input);
-    ZeroMemory(&si[num_process], sizeof(si[num_process]));
-    si[num_process].cb = sizeof(si[num_process]);
-    if (!CreateProcess(file.c_str(), NULL, NULL, NULL, FALSE,
-                       CREATE_NEW_CONSOLE, NULL, NULL, &si[num_process], &pi[num_process]))
-        return 2;
-    else {
-        ++num_process;
-        return 0;
+int listprocess(string input) {
+    for (int i = 0; i < num_process; ++i) {
+        cout << pi[i].dwProcessId << " " << pi[i].dwThreadId << endl;
     }
-}
-string runExeDoc = "Run a .exe file, can omit 'runexe' (draft).";
-
-int stop(string input) {
-    string processIdStr = takeFirstArgAndRemove(input);
-    DWORD processId = stringToDWORD(processIdStr);
-
-    HANDLE hThreadSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-    THREADENTRY32 threadEntry;
-    threadEntry.dwSize = sizeof(THREADENTRY32);
-    Thread32First(hThreadSnapshot, &threadEntry);
-    do {
-        if (threadEntry.th32OwnerProcessID == processId) {
-            HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, threadEntry.th32ThreadID);
-            SuspendThread(hThread);
-            CloseHandle(hThread);
-        }
-    } while (Thread32Next(hThreadSnapshot, &threadEntry));
-
-    CloseHandle(hThreadSnapshot);
     return 0;
 }
-string stopDoc = "Stop a background process (draft).";
-
-// int listprocess(string input) {
-//     for (int i = 0; i < num_process; ++i) {
-//         cout << pi[i].dwProcessId << " " << pi[i].dwThreadId << endl;
-//     }
-//     return 0;
-// }
-// string listprocessDoc = "All running process information.";
+string listprocessDoc = "All running process information.";
 
 int resume(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
@@ -163,3 +125,4 @@ int delpath(string input) {
     return 0;
 }
 string delpathDoc = "Delete an environment variable";
+

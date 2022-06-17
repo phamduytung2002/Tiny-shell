@@ -19,7 +19,7 @@ void buildCommand() {
     funcmap["echo"] = funcAndInstruction(echo, echoDoc);
     funcmap["help"] = funcAndInstruction(help, helpDoc);
     funcmap["exitShell"] = funcAndInstruction(exitShell, exitShellDoc);
-    funcmap["runexe"] = funcAndInstruction(runExe, runExeDoc);
+    funcmap["runBatExe"] = funcAndInstruction(runBatExe, runBatExeDoc);
     funcmap["datetime"] = funcAndInstruction(datetime, datetimeDoc);
     funcmap["time"] = funcAndInstruction(timee, timeDoc);
     funcmap["date"] = funcAndInstruction(date, dateDoc);
@@ -30,9 +30,6 @@ void buildCommand() {
     funcmap["listpath"] = funcAndInstruction(listpath, listpathDoc);
     funcmap["delpath"] = funcAndInstruction(delpath, delpathDoc);
     funcmap["kill"] = funcAndInstruction(kill, killDoc);
-    funcmap["foregroundMode"] = funcAndInstruction(foregroundMode, foregroundModeDoc);
-    funcmap["backgroundMode"] = funcAndInstruction(backgroundMode, backgroundModeDoc);
-    funcmap["runbat"] = funcAndInstruction(runBat, runBatDoc);
     funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
     funcmap["dir"] = funcAndInstruction(dir, dirDoc);
 }

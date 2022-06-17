@@ -4,7 +4,7 @@ using namespace std;
 
 #pragma once
 
-const int maxprocess = 3;
+const int maxprocess = 10;
 
 STARTUPINFO si[maxprocess];
 PROCESS_INFORMATION pi[maxprocess];

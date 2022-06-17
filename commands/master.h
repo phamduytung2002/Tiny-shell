@@ -18,20 +18,20 @@ void buildCommand() {
     funcmap["echo"] = funcAndInstruction(echo, echoDoc);
     funcmap["help"] = funcAndInstruction(help, helpDoc);
     funcmap["exitShell"] = funcAndInstruction(exitShell, exitShellDoc);
-    funcmap["runexe"] = funcAndInstruction(runExe, runExeDoc);
+    funcmap["runBatExe"] = funcAndInstruction(runBatExe, runBatExeDoc);
     funcmap["datetime"] = funcAndInstruction(datetime, datetimeDoc);
     funcmap["time"] = funcAndInstruction(timee, timeDoc);
     funcmap["date"] = funcAndInstruction(date, dateDoc);
     funcmap["stop"] = funcAndInstruction(stop, stopDoc);
     funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
     funcmap["resume"] = funcAndInstruction(resume, resumeDoc);
-    //funcmap["addpath"] = funcAndInstruction(addpath, addpathDoc);
+    funcmap["addpath"] = funcAndInstruction(addpath, addpathDoc);
     funcmap["path"] = funcAndInstruction(path, pathDoc);
     funcmap["listpath"] = funcAndInstruction(listpath, listpathDoc);
     funcmap["delpath"] = funcAndInstruction(delpath, delpathDoc);
     funcmap["kill"] = funcAndInstruction(kill, killDoc);
-    funcmap["foregroundMode"] = funcAndInstruction(foregroundMode, foregroundModeDoc);
-    funcmap["backgroundMode"] = funcAndInstruction(backgroundMode, backgroundModeDoc);
-    funcmap["runbat"] = funcAndInstruction(runBat, runBatDoc);
+    // funcmap["foregroundMode"] = funcAndInstruction(foregroundMode, foregroundModeDoc);
+    // funcmap["backgroundMode"] = funcAndInstruction(backgroundMode, backgroundModeDoc);
+    // funcmap["runbat"] = funcAndInstruction(runBat, runBatDoc);
     //funcmap["exit"] = funcAndInstruction(exit, exitDoc);
 }

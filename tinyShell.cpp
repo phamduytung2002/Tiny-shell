@@ -10,8 +10,8 @@ int run(string input) {
     if (command == "") return 0;
 
     if (funcmap.find(command) == funcmap.end()) {
-        if (command.find('.') != string::npos && command.substr(command.find('.')) == ".exe")
-            return runExe(command + " " + input);  // No command, run file .exe
+        if (command.find('.') != string::npos && (command.substr(command.find('.')) == ".exe" || command.substr(command.find('.')) == ".bat"))
+            return runBatExe(command + " " + input);  // No command, run file .exe
         else
             cout << command << " is not recognized as an internal or external command, operable program or batch file.\n";
         return 0;
@@ -38,13 +38,14 @@ int main() {
     buildCommand();
     string input;
     while (true) {
+        signal(SIGINT, [](int signum) {
+            kill(".");
+            exit(2);
+        });
         input = "";
-        //cout << filesystem::current_path().string() << ">";
+        cout << filesystem::current_path().string() << ">";
         getline(cin, input);
-
-        string Input = Mode(input);
-
-        int res = run(Input);
+        int res = run(input);
         if (processRunResult(res)) break;
     }
 }

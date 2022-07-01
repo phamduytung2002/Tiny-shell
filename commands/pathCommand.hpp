@@ -6,13 +6,13 @@ int addpath(string input) {
     putenv((a + "=" + b).c_str());
     return 0;
 }
-string addpathDoc = "Add/change an environment variable";
+string addpathDoc = "Add/change an environment variable\n\t\t  Usage: 'addpath <variable> <value>'.";
 
 int path(string input) {
     cout << getenv(takeFirstArgAndRemove(input).c_str()) << "\n";
     return 0;
 }
-string pathDoc = "Display an environment variable";
+string pathDoc = "Display an environment variable\n\t\t  Usage: 'path <variable>'.";
 
 int listpath(string input) {
     function<void(LPTCH)> free = [](LPTCH p) {
@@ -33,11 +33,11 @@ int listpath(string input) {
     }
     return 0;
 }
-string listpathDoc = "Display all environment variable";
+string listpathDoc = "Display all environment variable\n\t\t  Usage: 'listpath'.";
 
 int delpath(string input) {
     input = takeFirstArgAndRemove(input);
     SetEnvironmentVariable(input.c_str(), NULL);
     return 0;
 }
-string delpathDoc = "Delete an environment variable";
+string delpathDoc = "Delete an environment variable\n\t\t  Usage: 'delpath <variable>'.";

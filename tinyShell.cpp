@@ -33,7 +33,8 @@ int main() {
     buildCommand();
     string input;
     signal(SIGINT, [](int signum) {
-        TerminateProcess(foreProc.pi.hProcess, 0);
+        if(foreProc.processStatus!=200) TerminateProcess(foreProc.pi.hProcess, 0);
+        else exit(0);
     });  // CTRC C to stop foreground process if there is any
     while (true) {
         input = "";

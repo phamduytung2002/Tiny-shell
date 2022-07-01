@@ -5,7 +5,7 @@ int echo(string c) {
     cout << c << endl;
     return 0;
 }
-string echoDoc = "Just print the argument.";
+string echoDoc = "Just print the argument.\n\t\t  Usage: 'echo <anything>'.";
 
 int exitShell(string c) {
     while (!backProcList.empty()) {
@@ -14,7 +14,7 @@ int exitShell(string c) {
     }
     return 1;
 }
-string exitShellDoc = "Exit shell.";
+string exitShellDoc = "Exit shell.\n\t\t  Usage: 'exitShell'.";
 
 int help(string c) {
     cout << "Command list: \n";
@@ -25,7 +25,7 @@ int help(string c) {
     }
     return 0;
 }
-string helpDoc = "List all available command.";
+string helpDoc = "List all available command.\n\t\t  Usage: 'help'.";
 
 int date(string input) {
     time_t t = time(0);  // get time now
@@ -33,7 +33,7 @@ int date(string input) {
     cout << now->tm_mday << "/" << now->tm_mon + 1 << "/" << now->tm_year + 1900 << '\n';
     return 0;
 }
-string dateDoc = "Display today date.";
+string dateDoc = "Display today date.\n\t\t  Usage: 'date'.";
 
 int timee(string input) {
     time_t t = time(0);  // get time now
@@ -41,7 +41,7 @@ int timee(string input) {
     cout << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << '\n';
     return 0;
 }
-string timeDoc = "Display current time.";
+string timeDoc = "Display current time.\n\t\t  Usage: 'time'.";
 
 int datetime(string input) {
     time_t t = time(0);  // get time now
@@ -50,7 +50,7 @@ int datetime(string input) {
     cout << now->tm_hour << ":" << now->tm_min << ":" << now->tm_sec << "\n";
     return 0;
 }
-string datetimeDoc = "Display current date and time.";
+string datetimeDoc = "Display current date and time.\n\t\t  Usage: 'datetime'.";
 
 int dir(string input) {
     string path = filesystem::current_path().string();
@@ -66,10 +66,10 @@ int dir(string input) {
     }
     return 0;
 }
-string dirDoc = "List all directory.";
+string dirDoc = "List all directory.\n\t\t  Usage: 'dir'.";
 
 int cd(string input) {
     chdir(input.c_str());
     return 0;
 }
-string cdDoc = "Change dir";
+string cdDoc = "Change dir.\n\t\t  Usage: 'cd <subdirectory>' or 'cd ..' to change to the parents directory.";

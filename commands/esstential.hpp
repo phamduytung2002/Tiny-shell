@@ -16,6 +16,10 @@ struct procInfo {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
     int processStatus;
+
+    procInfo(){
+        this->processStatus=200; // not exist
+    }
 };
 list<procInfo> backProcList;
 procInfo foreProc;

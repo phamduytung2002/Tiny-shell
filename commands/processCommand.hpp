@@ -13,7 +13,7 @@ int stop(string input) {
     }
     return 0;
 }
-string stopDoc = "Stop a background process.";
+string stopDoc = "Stop a background process.\n\t\t  Usage: stop <process ID>.";
 
 int resume(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
@@ -28,7 +28,7 @@ int resume(string input) {
     }
     return 0;
 }
-string resumeDoc = "Resume a stopped background process.";
+string resumeDoc = "Resume a stopped background process.\n\t\t  Usage: 'resume <process ID>'.";
 
 int kill(string c) {
     // input = dau vao - "kill"
@@ -56,7 +56,7 @@ int kill(string c) {
         return 2;  // cant found process
     }
 }
-string killDoc = "kill a process with its ID; kill . for kill all.";
+string killDoc = "Kill (a) process(es).\n\t\t  Usage: 'kill <process ID>' or 'kill .' for kill all";
 
 int listprocess(string input) {
     printf("Process ID\tStatus\t\tFile name\n");
@@ -73,7 +73,7 @@ int listprocess(string input) {
     }
     return 0;
 }
-string listprocessDoc = "Display running process informations.";
+string listprocessDoc = "Display running process informations.\n\t\t  Usage: 'listprocess'";
 
 int runBatExe(string input) {
     string file = takeFirstArgAndRemove(input);
@@ -96,7 +96,7 @@ int runBatExe(string input) {
                 stop(ids);
             }
             WaitForSingleObject(newProc.pi.hProcess, INFINITE);
-            newProc = procInfo();
+            newProc.processStatus = 200;
             for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
                 DWORD id = proc->pi.dwProcessId;
                 string idss = to_string(id);
@@ -107,4 +107,4 @@ int runBatExe(string input) {
         return 0;
     }
 }
-string runBatExeDoc = "Run a .exe or .bat file in background or foreground mode, can omit 'run'.\n\t\t  To run in foreground mode use '* foreground'.";
+string runBatExeDoc = "Run a .exe or .bat file\n\t\t  Usage: 'run <.bat or .exe file> [foreground]'";

@@ -1,4 +1,4 @@
-#include "esstential.hpp"
+#include "essential.hpp"
 
 int stop(string input) {
     string processIdStr = takeFirstArgAndRemove(input);

@@ -1,4 +1,4 @@
-#include "esstential.hpp"
+#include "essential.hpp"
 
 // example
 int echo(string c) {
@@ -7,14 +7,14 @@ int echo(string c) {
 }
 string echoDoc = "Just print the argument.\n\t\t  Usage: 'echo <anything>'.";
 
-int exitShell(string c) {
+int exitshell(string c) {
     while (!backProcList.empty()) {
         TerminateProcess(backProcList.begin()->pi.hProcess, 0);
         backProcList.pop_front();
     }
     return 1;
 }
-string exitShellDoc = "Exit shell.\n\t\t  Usage: 'exitShell'.";
+string exitshellDoc = "Exit shell.\n\t\t  Usage: 'exitShell'.";
 
 int help(string c) {
     cout << "Command list: \n";

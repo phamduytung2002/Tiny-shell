@@ -1,9 +1,7 @@
 tinyShell.cpp
-	master.h
-		tung.h
-		bien.h
-		quoc.h
-		dat.h
-			commandList.h
-			processList.h
-			utils.h
+	master.hpp
+		pathCommand.hpp
+		processCommand.hpp
+		specialCommand.hpp
+			essential.hpp
+				utils.hpp

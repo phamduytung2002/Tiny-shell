@@ -17,7 +17,7 @@
 void buildCommand() {
     funcmap["echo"] = funcAndInstruction(echo, echoDoc);
     funcmap["help"] = funcAndInstruction(help, helpDoc);
-    funcmap["exitShell"] = funcAndInstruction(exitShell, exitShellDoc);
+    funcmap["exitshell"] = funcAndInstruction(exitshell, exitshellDoc);
     funcmap["run"] = funcAndInstruction(runBatExe, runBatExeDoc);
     funcmap["datetime"] = funcAndInstruction(datetime, datetimeDoc);
     funcmap["time"] = funcAndInstruction(timee, timeDoc);

@@ -17,8 +17,8 @@ struct procInfo {
     PROCESS_INFORMATION pi;
     int processStatus;
 
-    procInfo(){
-        this->processStatus=200; // not exist
+    procInfo() {
+        this->processStatus = 200;  // not exist
     }
 };
 list<procInfo> backProcList;

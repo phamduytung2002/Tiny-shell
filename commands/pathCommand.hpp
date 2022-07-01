@@ -1,4 +1,4 @@
-#include "esstential.hpp"
+#include "essential.hpp"
 
 int addpath(string input) {
     string a = takeFirstArgAndRemove(input);

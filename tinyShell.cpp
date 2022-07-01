@@ -1,9 +1,4 @@
-#include <bits/stdc++.h>
-#include <windows.h>
-
 #include "commands/master.h"
-#include "utils.h"
-using namespace std;
 
 int run(string input) {
     string command = takeFirstArgAndRemove(input);

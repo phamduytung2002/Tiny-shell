@@ -1,9 +1,7 @@
-#include <bits/stdc++.h>
-#include "bien.h"
-#include "tung.h"
-#include "dat.h"
-#include "quoc.h"
-using namespace std;
+#include "pathCommand.h"
+#include "processCommand.h"
+#include "specialCommand.h"
+
 /*
     >> How to add a command:
     Create a function take a string as argument and return an int as an error code
@@ -12,14 +10,14 @@ using namespace std;
         2, 3, ...
     Create instruction/doc (string)
     Add to funcmap in buildCommand() below.
-    See echo command (in tung.h) for example.
+    See echo command (in specialCommand.h) for example.
 */
 
 void buildCommand() {
     funcmap["echo"] = funcAndInstruction(echo, echoDoc);
     funcmap["help"] = funcAndInstruction(help, helpDoc);
     funcmap["exitShell"] = funcAndInstruction(exitShell, exitShellDoc);
-    funcmap["runBatExe"] = funcAndInstruction(runBatExe, runBatExeDoc);
+    funcmap["run"] = funcAndInstruction(runBatExe, runBatExeDoc);
     funcmap["datetime"] = funcAndInstruction(datetime, datetimeDoc);
     funcmap["time"] = funcAndInstruction(timee, timeDoc);
     funcmap["date"] = funcAndInstruction(date, dateDoc);

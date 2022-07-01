@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <tlhelp32.h>
+#include <unistd.h>
 #include <winbase.h>
 
 #include <cstdlib>
@@ -69,7 +70,7 @@ int resume(string input) {
     for (int i = 0; i < maxprocess; ++i) {
         if (pi[i].dwProcessId == processId) {
             ResumeThread(pi[i].hThread);
-            processStatus[i] = 0; //running
+            processStatus[i] = 0;  // running
             break;
         }
     }
@@ -118,3 +119,9 @@ int delpath(string input) {
     return 0;
 }
 string delpathDoc = "Delete an environment variable";
+
+int cd(string input) {
+    chdir(input.c_str());
+    return 0;
+}
+string cdDoc = "Change dir";

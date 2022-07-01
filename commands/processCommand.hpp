@@ -1,10 +1,10 @@
-#include "esstential.h"
+#include "esstential.hpp"
 
 int stop(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
     DWORD processId = stringToDWORD(processIdStr);
 
-    for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+    for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         if (proc->pi.dwProcessId == processId) {
             SuspendThread(proc->pi.hThread);
             proc->processStatus = 300;  // Suspend
@@ -19,7 +19,7 @@ int resume(string input) {
     string processIdStr = takeFirstArgAndRemove(input);
     DWORD processId = stringToDWORD(processIdStr);
 
-    for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+    for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         if (proc->pi.dwProcessId == processId) {
             ResumeThread(proc->pi.hThread);
             proc->processStatus = 0;  // running
@@ -38,18 +38,18 @@ int kill(string c) {
     parse(c, arg1, arg2);
     // chuyen tu string sang so
     if (arg1 == ".") {
-        while (!procList.empty()) {
-            TerminateProcess(procList.begin()->pi.hProcess, 0);
-            procList.pop_front();
+        while (!backProcList.empty()) {
+            TerminateProcess(backProcList.begin()->pi.hProcess, 0);
+            backProcList.pop_front();
         }
         return 0;
     } else {
         DWORD processId = stringToDWORD(arg1);
-        for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+        for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
             if (proc->pi.dwProcessId == processId) {
                 if (proc->processStatus == 200) return 2;  // process is terminated
                 TerminateProcess(proc->pi.hProcess, 0);
-                procList.erase(proc);
+                backProcList.erase(proc);
                 return 0;
             }
         }
@@ -60,7 +60,7 @@ string killDoc = "kill a process with its ID; kill . for kill all.";
 
 int listprocess(string input) {
     printf("Process ID\tStatus\t\tFile name\n");
-    for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+    for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         HANDLE hProcess = proc->pi.hProcess;
         string this_status;
         if (proc->processStatus == 0)
@@ -87,27 +87,23 @@ int runBatExe(string input) {
                        CREATE_NEW_CONSOLE, NULL, NULL, &(newProc.si), &(newProc.pi)))
         return 2;
     else {
-        procList.push_back(newProc);
         if (inputs == "foreground") {
-            signal(SIGINT, [](int signum) {
-                HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, procList.end()->pi.dwProcessId);
-                TerminateProcess(hProc, 0);
-                CloseHandle(hProc);
-                procList.pop_back();
-            });  // CTRC C to stop this foreground process
+            foreProc = newProc;
 
-            for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+            for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
                 DWORD id = proc->pi.dwProcessId;
                 string ids = to_string(id);
                 stop(ids);
             }
             WaitForSingleObject(newProc.pi.hProcess, INFINITE);
-            for (auto proc = procList.begin(); proc != procList.end(); ++proc) {
+            newProc = procInfo();
+            for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
                 DWORD id = proc->pi.dwProcessId;
                 string idss = to_string(id);
                 resume(idss);
             }
-        }
+        } else
+            backProcList.push_back(newProc);
         return 0;
     }
 }

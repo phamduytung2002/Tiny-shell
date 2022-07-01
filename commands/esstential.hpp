@@ -6,18 +6,19 @@
 #include <unistd.h>
 #include <windows.h>
 using namespace std;
-#include "utils.h"
+#include "utils.hpp"
 
 #pragma once
 
 ///////////  process data structure
 
-struct procInfo{
+struct procInfo {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
     int processStatus;
 };
-list<procInfo> procList;
+list<procInfo> backProcList;
+procInfo foreProc;
 
 ///////////  command data structure
 

@@ -1,13 +1,14 @@
-#include "pathCommand.h"
-#include "processCommand.h"
-#include "specialCommand.h"
+#include "pathCommand.hpp"
+#include "processCommand.hpp"
+#include "specialCommand.hpp"
 
 /*
     >> How to add a command:
     Create a function take a string as argument and return an int as an error code
         0: no error, continue to run
         1: exit shell
-        2, 3, ...
+        2: cant execute a command
+        3, 4 ...
     Create instruction/doc (string)
     Add to funcmap in buildCommand() below.
     See echo command (in specialCommand.h) for example.

@@ -1,4 +1,4 @@
-#include "esstential.h"
+#include "esstential.hpp"
 
 // example
 int echo(string c) {
@@ -8,9 +8,9 @@ int echo(string c) {
 string echoDoc = "Just print the argument.";
 
 int exitShell(string c) {
-    while(!procList.empty()){
-        TerminateProcess(procList.begin()->pi.hProcess, 0);
-        procList.pop_front();
+    while (!backProcList.empty()) {
+        TerminateProcess(backProcList.begin()->pi.hProcess, 0);
+        backProcList.pop_front();
     }
     return 1;
 }

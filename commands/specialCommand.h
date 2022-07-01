@@ -8,10 +8,9 @@ int echo(string c) {
 string echoDoc = "Just print the argument.";
 
 int exitShell(string c) {
-    for (int i = 0; i < maxprocess; i++) {
-        DWORD id = pi[i].dwProcessId;
-        HANDLE hProc = OpenProcess(PROCESS_TERMINATE, FALSE, id);
-        TerminateProcess(hProc, 0);
+    while(!procList.empty()){
+        TerminateProcess(procList.begin()->pi.hProcess, 0);
+        procList.pop_front();
     }
     return 1;
 }

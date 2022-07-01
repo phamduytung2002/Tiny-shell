@@ -12,12 +12,12 @@ using namespace std;
 
 ///////////  process data structure
 
-const int maxprocess = 10;
-int num_process = 0;
-
-STARTUPINFO si[maxprocess];
-PROCESS_INFORMATION pi[maxprocess];
-int processStatus[maxprocess];
+struct procInfo{
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+    int processStatus;
+};
+list<procInfo> procList;
 
 ///////////  command data structure
 

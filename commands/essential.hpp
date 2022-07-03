@@ -1,10 +1,7 @@
 #include <bits/stdc++.h>
-#include <dirent.h>
-#include <processthreadsapi.h>
-#include <psapi.h>
-#include <tlhelp32.h>
-#include <unistd.h>
 #include <windows.h>
+#include <dirent.h>
+#include <psapi.h>
 using namespace std;
 #include "utils.hpp"
 

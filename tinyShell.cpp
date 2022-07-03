@@ -35,7 +35,7 @@ int main() {
     signal(SIGINT, [](int signum) {
         if(foreProc.processStatus!=200) TerminateProcess(foreProc.pi.hProcess, 0);
         else exit(0);
-    });  // CTRC C to stop foreground process if there is any
+    });  // CTRC C to terminate foreground process if there is any
     while (true) {
         input = "";
         cout << filesystem::current_path().string() << ">";

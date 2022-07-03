@@ -96,16 +96,14 @@ int runBatExe(string input) {
             foreProc = newProc;
 
             for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
-                DWORD id = proc->pi.dwProcessId;
-                string ids = to_string(id);
-                stop(ids);
+                if (proc->processStatus == 0)
+                    SuspendThread(proc->pi.hThread);
             }
             WaitForSingleObject(newProc.pi.hProcess, INFINITE);
             newProc.processStatus = 200;
             for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
-                DWORD id = proc->pi.dwProcessId;
-                string idss = to_string(id);
-                resume(idss);
+                if (proc->processStatus == 0)
+                    ResumeThread(proc->pi.hThread);
             }
         } else
             backProcList.push_back(newProc);

@@ -32,4 +32,5 @@ void buildCommand() {
     funcmap["listprocess"] = funcAndInstruction(listprocess, listprocessDoc);
     funcmap["dir"] = funcAndInstruction(dir, dirDoc);
     funcmap["cd"] = funcAndInstruction(cd, cdDoc);
+    funcmap["clear"] = funcAndInstruction(clear, clearDoc);
 }

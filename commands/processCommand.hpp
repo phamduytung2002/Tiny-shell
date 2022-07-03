@@ -6,12 +6,15 @@ int stop(string input) {
 
     for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         if (proc->pi.dwProcessId == processId) {
-            SuspendThread(proc->pi.hThread);
-            proc->processStatus = 300;  // Suspend
-            break;
+            if (proc->processStatus == 0) {
+                SuspendThread(proc->pi.hThread);
+                proc->processStatus = 300;  // Suspend
+                return 0;
+            } else
+                return 2;
         }
     }
-    return 0;
+    return 2;
 }
 string stopDoc = "Stop a background process.\n\t\t  Usage: stop <process ID>.";
 
@@ -21,12 +24,15 @@ int resume(string input) {
 
     for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         if (proc->pi.dwProcessId == processId) {
-            ResumeThread(proc->pi.hThread);
-            proc->processStatus = 0;  // running
-            break;
+            if (proc->processStatus == 300) {
+                ResumeThread(proc->pi.hThread);
+                proc->processStatus = 0;  // running
+                return 0;
+            } else
+                return 2;
         }
     }
-    return 0;
+    return 2;
 }
 string resumeDoc = "Resume a stopped background process.\n\t\t  Usage: 'resume <process ID>'.";
 
@@ -47,7 +53,6 @@ int kill(string c) {
         DWORD processId = stringToDWORD(arg1);
         for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
             if (proc->pi.dwProcessId == processId) {
-                if (proc->processStatus == 200) return 2;  // process is terminated
                 TerminateProcess(proc->pi.hProcess, 0);
                 backProcList.erase(proc);
                 return 0;

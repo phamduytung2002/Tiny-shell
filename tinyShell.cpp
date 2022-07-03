@@ -21,7 +21,7 @@ bool processRunResult(int res) {
         case 1:
             return true;
         case 2:
-            cout << "Command fails.\n";
+            cout << "Not found.\n";
             break;
         default:
             cout << "Error!\n";

@@ -56,13 +56,9 @@ int dir(string input) {
     string path = filesystem::current_path().string();
     DIR* dir;
     dirent* pdir;
-    vector<string> files;
     dir = opendir(path.c_str());
     while (pdir = readdir(dir)) {
-        files.push_back(pdir->d_name);
-    }
-    for (int i = 0; i < files.size(); ++i) {
-        cout << files[i] << '\n';
+        cout << pdir->d_name << endl;
     }
     return 0;
 }
@@ -73,3 +69,9 @@ int cd(string input) {
     return 0;
 }
 string cdDoc = "Change dir.\n\t\t  Usage: 'cd <subdirectory>' or 'cd ..' to change to the parents directory.";
+
+int clear(string input){
+    system("cls");
+    return 0;
+}
+string clearDoc = "Clear screen.\n\t\t  Usage: 'clear'.";

@@ -9,7 +9,10 @@ int addpath(string input) {
 string addpathDoc = "Add/change an environment variable\n\t\t  Usage: 'addpath <variable> <value>'.";
 
 int path(string input) {
-    cout << getenv(takeFirstArgAndRemove(input).c_str()) << "\n";
+    char val[1024];
+    DWORD res = GetEnvironmentVariable(takeFirstArgAndRemove(input).c_str(), val, 1024);
+    if(res==0) return 2;
+    else cout<<val<<endl;
     return 0;
 }
 string pathDoc = "Display an environment variable\n\t\t  Usage: 'path <variable>'.";

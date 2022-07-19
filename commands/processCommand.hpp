@@ -64,7 +64,7 @@ int kill(string c) {
 string killDoc = "Kill (a) process(es).\n\t\t  Usage: 'kill <process ID>' or 'kill .' for kill all";
 
 int listprocess(string input) {
-    printf("Process ID\tStatus\t\tFile name\n");
+    printf("Process ID\tStatus\t\tFile address\n");
     for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         HANDLE hProcess = proc->pi.hProcess;
         string this_status;
@@ -94,13 +94,13 @@ int runBatExe(string input) {
     else {
         if (inputs == "foreground") {
             foreProc = newProc;
-
+            foreProc.processStatus = 0;
             for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
                 if (proc->processStatus == 0)
                     SuspendThread(proc->pi.hThread);
             }
             WaitForSingleObject(newProc.pi.hProcess, INFINITE);
-            newProc.processStatus = 200;
+            foreProc.processStatus = 200;
             for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
                 if (proc->processStatus == 0)
                     ResumeThread(proc->pi.hThread);
@@ -111,3 +111,28 @@ int runBatExe(string input) {
     }
 }
 string runBatExeDoc = "Run a .exe or .bat file\n\t\t  Usage: 'run <.bat or .exe file> [foreground]'";
+
+int toForeground(string input) {
+    string idstring = takeFirstArgAndRemove(input);
+    DWORD ID = stringToDWORD(idstring);
+    for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
+        if (proc->pi.dwProcessId == ID && proc->processStatus == 0) {
+            foreProc = *proc;
+            foreProc.processStatus = 0;
+            backProcList.erase(proc);
+            for (auto pproc = backProcList.begin(); pproc != backProcList.end(); ++pproc) {
+                if (pproc->processStatus == 0)
+                    SuspendThread(pproc->pi.hThread);
+            }
+            WaitForSingleObject(proc->pi.hProcess, INFINITE);
+            foreProc.processStatus = 200;
+            for (auto pproc = backProcList.begin(); pproc != backProcList.end(); ++pproc) {
+                if (pproc->processStatus == 0)
+                    ResumeThread(pproc->pi.hThread);
+            }
+            return 0;
+        }
+    }
+    return 2;
+}
+string toForegroundDoc = "Change a running background process to foreground\n\t\t  Usage: 'toForeground <procesID>'.";

@@ -32,11 +32,14 @@ bool processRunResult(int res) {
 int main() {
     buildCommand();
     string input;
-    signal(SIGINT, [](int signum) {
-        if(foreProc.processStatus!=200) TerminateProcess(foreProc.pi.hProcess, 0);
-        else exit(0);
-    });  // CTRC C to terminate foreground process if there is any
     while (true) {
+        signal(SIGINT, [](int signum) {
+            if (foreProc.processStatus != 200) {
+                TerminateProcess(foreProc.pi.hProcess, 0);
+                foreProc.processStatus = 200;
+            } else
+                exit(0);
+        });  // CTRC C to terminate foreground process if there is any
         input = "";
         cout << filesystem::current_path().string() << ">";
         getline(cin, input);

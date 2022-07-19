@@ -33,4 +33,5 @@ void buildCommand() {
     funcmap["dir"] = funcAndInstruction(dir, dirDoc);
     funcmap["cd"] = funcAndInstruction(cd, cdDoc);
     funcmap["clear"] = funcAndInstruction(clear, clearDoc);
+    funcmap["toForeground"] = funcAndInstruction(toForeground, toForegroundDoc);
 }

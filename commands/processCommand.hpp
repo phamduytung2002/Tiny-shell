@@ -68,10 +68,13 @@ int listprocess(string input) {
     for (auto proc = backProcList.begin(); proc != backProcList.end(); ++proc) {
         HANDLE hProcess = proc->pi.hProcess;
         string this_status;
-        if (proc->processStatus == 0)
+        DWORD exitcode;
+        GetExitCodeProcess(proc->pi.hProcess, &exitcode);
+        if (proc->processStatus == 0 && exitcode == STILL_ACTIVE)
             this_status = "running";
         else if (proc->processStatus == 300)
             this_status = "suspend";
+        else continue;
         CHAR name[1024];
         DWORD a = GetModuleFileNameEx(hProcess, NULL, name, 1024);
         cout << proc->pi.dwProcessId << "\t\t" << this_status << "\t\t" << name << "\n";
